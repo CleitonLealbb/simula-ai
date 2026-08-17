@@ -1,0 +1,42 @@
+export const questions = [
+  {
+    id: 1,
+    category: "adicao",
+    difficulty: "facil",
+    question: "Quanto é 5 + 3?",
+    options: ["6", "7", "8", "9"],
+    answer: "8",
+  },
+  {
+    id: 2,
+    category: "adicao",
+    difficulty: "facil",
+    question: "Quanto é 7 + 4?",
+    options: ["9", "10", "11", "12"],
+    answer: "11",
+  },
+  {
+    id: 3,
+    category: "subtracao",
+    difficulty: "facil",
+    question: "Quanto é 10 - 4?",
+    options: ["4", "5", "6", "7"],
+    answer: "6",
+  },
+  {
+    id: 4,
+    category: "multiplicacao",
+    difficulty: "facil",
+    question: "Quanto é 6 × 2?",
+    options: ["10", "12", "14", "16"],
+    answer: "12",
+  },
+  {
+    id: 5,
+    category: "divisao",
+    difficulty: "facil",
+    question: "Quanto é 12 ÷ 3?",
+    options: ["2", "3", "4", "6"],
+    answer: "4",
+  },
+];
