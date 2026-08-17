@@ -1,10 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { questions } from "@/src/data/questions";
 
-export default function QuizPage() {
+function QuizContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -15,7 +15,9 @@ export default function QuizPage() {
       return questions;
     }
 
-    return questions.filter((question) => question.category === category);
+    return questions.filter(
+      (question) => question.category === category
+    );
   }, [category]);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -28,8 +30,12 @@ export default function QuizPage() {
   function handleNextQuestion() {
     if (!selectedAnswer || !currentQuestion) return;
 
-    if (selectedAnswer === currentQuestion.answer) {
-      setScore((currentScore) => currentScore + 1);
+    const isCorrect = selectedAnswer === currentQuestion.answer;
+
+    const updatedScore = isCorrect ? score + 1 : score;
+
+    if (isCorrect) {
+      setScore(updatedScore);
     }
 
     if (currentQuestionIndex === quizQuestions.length - 1) {
@@ -75,7 +81,9 @@ export default function QuizPage() {
   }
 
   if (finished) {
-    const percentage = Math.round((score / quizQuestions.length) * 100);
+    const percentage = Math.round(
+      (score / quizQuestions.length) * 100
+    );
 
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
@@ -152,7 +160,9 @@ export default function QuizPage() {
                 className="h-full rounded-full bg-slate-900 transition-all"
                 style={{
                   width: `${
-                    ((currentQuestionIndex + 1) / quizQuestions.length) * 100
+                    ((currentQuestionIndex + 1) /
+                      quizQuestions.length) *
+                    100
                   }%`,
                 }}
               />
@@ -197,5 +207,19 @@ export default function QuizPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function QuizPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-slate-50">
+          <p className="text-slate-500">Carregando quiz...</p>
+        </main>
+      }
+    >
+      <QuizContent />
+    </Suspense>
   );
 }
