@@ -10,15 +10,23 @@ function QuizContent() {
 
   const category = searchParams.get("categoria");
 
-  const quizQuestions = useMemo(() => {
-    if (category === "misto") {
-      return questions;
-    }
+ const quizQuestions = useMemo(() => {
+  let filteredQuestions = questions;
 
-    return questions.filter(
+  if (category && category !== "misto") {
+    filteredQuestions = questions.filter(
       (question) => question.category === category
     );
-  }, [category]);
+  }
+
+  // Embaralha as perguntas
+  const shuffledQuestions = [...filteredQuestions].sort(
+    () => Math.random() - 0.5
+  );
+
+  // Seleciona no máximo 30 perguntas
+  return shuffledQuestions.slice(0, 30);
+}, [category]);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
