@@ -96,7 +96,7 @@ export default function EnsinoMedioPage() {
   const router = useRouter();
 
   function handleCategory(category: string) {
-    router.push(`/quiz?categoria=${category}`);
+    router.push(`/aprender/${category}`);
   }
 
   return (
